@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
  * @author Akira Koyasu
  */
 public class IndexTest {
+    static final String INDEX_URL = "http://localhost:63342/tdd-sample/public/index.php";
 
     private static final WebDriver driver = new ChromeDriver();
     private static final Client client = ClientBuilder.newClient();
@@ -39,8 +40,6 @@ public class IndexTest {
             }
         });
     }
-
-    private static final String INDEX_URL = "http://localhost:63342/tdd-sample/public/index.php";
 
     @AfterClass
     public static void down() {
