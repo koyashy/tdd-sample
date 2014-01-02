@@ -40,6 +40,8 @@ public class IndexTest {
         });
     }
 
+    private static final String INDEX_URL = "http://localhost:63342/tdd-sample/public/index.php";
+
     @AfterClass
     public static void down() {
         driver.quit();
@@ -47,8 +49,7 @@ public class IndexTest {
 
     @Test
     public void testHeading() {
-        String url = "http://localhost:63342/tdd-sample/public/index.php";
-        driver.get(url);
+        driver.get(INDEX_URL);
 
         WebElement element = driver.findElement(By.cssSelector("h1"));
 
@@ -56,10 +57,8 @@ public class IndexTest {
     }
 
     @Test
-    public void testByClient() throws IOException {
-        String url = "http://localhost:63342/tdd-sample/public/index.php";
-
-        Response r = client.target(url).request()
+    public void testHttpResponse() throws IOException {
+        Response r = client.target(INDEX_URL).request()
                 .header(HttpHeaders.ACCEPT_LANGUAGE, "ja")
                 .get();
 
@@ -68,5 +67,14 @@ public class IndexTest {
 
         assertEquals(200, status.getStatusCode());
         assertEquals(MediaType.HTML_UTF_8.withoutParameters().toString(), contentType);
+    }
+
+    @Test
+    public void hasForm() {
+        driver.get(INDEX_URL);
+
+        driver.findElement(By.cssSelector("input[name='a']"));
+        driver.findElement(By.cssSelector("input[name='b']"));
+        driver.findElement(By.cssSelector("input[type='submit']"));
     }
 }
